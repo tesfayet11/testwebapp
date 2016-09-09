@@ -1,5 +1,8 @@
 package web.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -20,12 +23,20 @@ public class HomeController {
 
 	@RequestMapping(value = "/addStudent", method = RequestMethod.POST)
 	   public String addStudent(@ModelAttribute("SpringWeb")Student student, HttpServletRequest req, 
-	   ModelMap model) {
+	   ModelMap model) throws Exception {
+		req.setCharacterEncoding( "UTF-8" );
 	      model.addAttribute("name", student.getName());
 	      model.addAttribute("age", student.getAge());
 	      model.addAttribute("id", student.getId());
 	      
 	      System.out.println(req.getCharacterEncoding());
+	      
+	      
+	      Enumeration<String> e = req.getParameterNames();
+	      while(e.hasMoreElements()){
+	    	  String name = e.nextElement();
+	    	  System.out.println(req.getParameter(name));
+	      }
 	      
 	      return "result";
 	   }
