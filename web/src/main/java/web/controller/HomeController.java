@@ -1,6 +1,6 @@
 package web.controller;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +32,18 @@ public class HomeController {
 	      System.out.println(req.getCharacterEncoding());
 	      
 	      
+	      
+	      
 	      Enumeration<String> e = req.getParameterNames();
 	      while(e.hasMoreElements()){
 	    	  String name = e.nextElement();
 	    	  System.out.println(req.getParameter(name));
+	    	  String value = req.getParameter(name);
+	    	  
+	    	  byte[] bytes = value.getBytes(StandardCharsets.ISO_8859_1);
+	    	  String item = new String(bytes, StandardCharsets.UTF_8);
+	    	  
+	    	  System.out.println(item);
 	      }
 	      
 	      return "result";
